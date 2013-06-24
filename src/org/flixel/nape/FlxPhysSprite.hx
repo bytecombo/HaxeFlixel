@@ -179,21 +179,24 @@ class FlxPhysSprite extends FlxSprite
 	 */	
 	private inline function updatePhysObjects() 
 	{
-		this.x = body.position.x - origin.x;
-		this.y = body.position.y - origin.y;
-		
-		if (body.allowRotation)
-		{
-			this.angle = body.rotation * _radsFactor;
+		if (body != null) {
+			this.x = body.position.x - origin.x;
+			this.y = body.position.y - origin.y;
+			
+			if (body.allowRotation)
+			{
+				this.angle = body.rotation * _radsFactor;
+			}
+			
+			// Applies custom physics drag.
+			if (_linearDrag < 1 || _angularDrag < 1) 
+			{
+				body.angularVel *= _angularDrag;
+				body.velocity.x *= _linearDrag;
+				body.velocity.y *= _linearDrag;
+			}		
 		}
-		
-		// Applies custom physics drag.
-		if (_linearDrag < 1 || _angularDrag < 1) 
-		{
-			body.angularVel *= _angularDrag;
-			body.velocity.x *= _linearDrag;
-			body.velocity.y *= _linearDrag;
-		}
+
 	}
 
 	/**
